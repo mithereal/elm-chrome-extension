@@ -1,27 +1,32 @@
--- elmsrc/Main.elm
 module Main exposing (..)
 
--- This line imports functions that generate HTML
 import Html exposing (Html, button, div, text)
-
--- Html.App is slightly more complicated but you can think of it as supervisor for our little Elm app
 import Html.App as Html
 
--- This will be the rendered HTML (an empty div)
-view : a -> Html b
+-- We need to handle click event
+import Html.Events exposing (onClick)
+
+-- Here we are defining two possible values
+type Msg = Increment | Decrement
+
+view : a -> Html Msg
 view model =
-    div []
-        []
+  div []
+    [ button [ onClick Decrement ] [ text "-" ]
+    , div [] [ text (toString model) ]
+    , button [ onClick Increment ] [ text "+" ]
+    ]
 
-
--- The update function will be used to update the rendered HTML
-update : a -> b -> number
+update : Msg -> number -> number
 update msg model =
     case msg of
-        _ ->
-            0
+        Increment ->
+            model + 1
 
--- This is what puts everything together
+        Decrement ->
+            model - 1
+
+
 main : Program Never
 main =
     Html.beginnerProgram { model = 0, view = view, update = update }

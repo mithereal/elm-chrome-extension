@@ -1,21 +1,31 @@
 module Main exposing (..)
 
-import Html exposing (Html, button, div, text)
-import Html.App as Html
-
 -- We need to handle click event
+
+import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
 
+
 -- Here we are defining two possible values
-type Msg = Increment | Decrement
+
+
+type Msg
+    = Increment
+    | Decrement
+
+
+type alias Model =
+    Int
+
 
 view : a -> Html Msg
 view model =
-  div []
-    [ button [ onClick Decrement ] [ text "-" ]
-    , div [] [ text (toString model) ]
-    , button [ onClick Increment ] [ text "+" ]
-    ]
+    div []
+        [ button [ onClick Decrement ] [ text "-" ]
+        , div [] [ text (toString model) ]
+        , button [ onClick Increment ] [ text "+" ]
+        ]
+
 
 update : Msg -> number -> number
 update msg model =
@@ -27,6 +37,6 @@ update msg model =
             model - 1
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
     Html.beginnerProgram { model = 0, view = view, update = update }
